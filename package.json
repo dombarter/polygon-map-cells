@@ -1,0 +1,19 @@
+{
+  "name": "polygon-map-cells",
+  "version": "1.0.0",
+  "description": "Generates a series of polygons and points based off a centre point, arc length and max radius.",
+  "main": "polygon-map-cells.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dombarter/polygon-map-cells.git"
+  },
+  "author": "dombarter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dombarter/polygon-map-cells/issues"
+  },
+  "homepage": "https://github.com/dombarter/polygon-map-cells#readme"
+}
