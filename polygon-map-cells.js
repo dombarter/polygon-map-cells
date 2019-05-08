@@ -194,6 +194,9 @@ module.exports = function (options){
 
     if(arcLength === "auto"){
         arcLength = Math.round((12.9642*maxRadius) + 9.7619)
+        if(arcLength < 300){
+            arcLength = 300
+        }
     }
 
     // create array of points -------------------
