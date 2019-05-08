@@ -19,4 +19,5 @@ var options = {
 var cells = Cells(options);
 ```
 
-Max Radius and Arc Length are measured in metres.
+Max Radius is measured in km and arcLength in metres. 
+Set Arc Length to "auto" for an auto density adjustment

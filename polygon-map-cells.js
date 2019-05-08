@@ -192,10 +192,14 @@ module.exports = function (options){
     var longitude = options.centre.long;
     var arcLength = options.arcLength;
 
+    if(arcLength === "auto"){
+        arcLength = Math.round((12.9642*maxRadius) + 9.7619)
+    }
+
     // create array of points -------------------
 
     var points = dots({
-        maxRadius: maxRadius + arcLength, //adder to sort out voronoi problem
+        maxRadius: (maxRadius*1000) + arcLength, //adder to sort out voronoi problem
         arcLength: arcLength,
         centreX: 0,
         centreY: 0,
