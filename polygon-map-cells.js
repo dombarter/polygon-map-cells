@@ -209,7 +209,7 @@ module.exports = function (options){
         centre: true,
     });
 
-    var numberInOuter = generateCoordinates(0,0,maxRadius + arcLength,arcLength).length;
+    var numberInOuter = generateCoordinates(0,0,(maxRadius*1000) + arcLength,arcLength).length;
 
     // Create coordinates for the map -----------
     
