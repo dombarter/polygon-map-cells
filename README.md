@@ -1,6 +1,6 @@
 # Polygon Map Cells
 
-Generates a series of polygons and points based off a centre point, arc length and max radius.
+Generates a series of polygons and points based off a centre point and max radius.
 
 # Usage
 
@@ -8,8 +8,7 @@ Generates a series of polygons and points based off a centre point, arc length a
 var Cells = require('polygon-map-cells');
 
 var options = {
-    maxRadius: 1500,
-    arcLength: 500,
+    maxRadius: 15,
     centre: {
         lat: 53.396870,
         long: -1.426108,
@@ -19,5 +18,4 @@ var options = {
 var cells = Cells(options);
 ```
 
-Max Radius is measured in km and arcLength in metres. 
-Set Arc Length to "auto" for an auto density adjustment
+Max Radius is measured in km.

@@ -1,5 +1,8 @@
 // Dots.js
 
+const minimumRadius = 300
+const radiusIncrementer = 15
+
 // Used to create an array of x, y coordinates from a set of options
 
 var d3_delaunay = require('./d3-delaunay'); //require the voronoi script
@@ -75,32 +78,45 @@ function dots(options){
     var maxRadius = options.maxRadius; //pulls variables from options
     var centreX = options.centreX;
     var centreY = options.centreY;
-    var arcLength = options.arcLength;
     var centre = (options.centre === undefined) ? true : options.centre;
 
-    var numberOfCircles = Math.floor(maxRadius/arcLength); //calculates the number of rings to complete
+    var arcLength = minimumRadius // the minimum radius allowed
+
+    //var numberOfCircles = Math.round(maxRadius/arcLength); //calculates the number of rings to complete
 
     var allDots = []; // creates a holder for the first creation of dots
-    allDotsNew = []; //creates a holder for the second creation of dots
+    var allDotsNew = []; //creates a holder for the second creation of dots
 
     if(centre === true){ // adds centre coordinate if asked to
         allDots.push([{x: centreX,y: centreY}]);
     }
 
-    for(var i = 0; i < numberOfCircles; i++){ //creates all the dots and places in 2D array
-        allDots.push(generateCoordinates(centreX,centreY,(arcLength * (i + 1)),arcLength));
+    var pastArcLengths = minimumRadius
+    var counter = 0
+
+    while(pastArcLengths < maxRadius){
+        allDots.push(generateCoordinates(centreX,centreY,pastArcLengths,arcLength));
+        
+        arcLength = arcLength + radiusIncrementer // increase arc length
+
+        pastArcLengths = pastArcLengths + arcLength // next arc length
     }
+
+    allDots.push(generateCoordinates(centreX,centreY,pastArcLengths,arcLength))
+
     for(var j = 0; j < allDots.length; j++){ //concatenates all the dots into a 1D array
         allDotsNew = allDotsNew.concat(allDots[j]);
     }
 
     var dots_ = { //creates a returnable object 
         number: allDotsNew.length,
-        xMin: (centreX - (numberOfCircles * arcLength)) - (arcLength/2), //adder to make slightly cleaner
-        xMax: (centreX + (numberOfCircles * arcLength)) + (arcLength/2),
-        yMin: (centreY - (numberOfCircles * arcLength)) - (arcLength/2),
-        yMax: (centreY + (numberOfCircles * arcLength)) + (arcLength/2),
+        xMin: (centreX - (pastArcLengths)) - (arcLength/2), //adder to make slightly cleaner
+        xMax: (centreX + (pastArcLengths)) + (arcLength/2),
+        yMin: (centreY - (pastArcLengths)) - (arcLength/2),
+        yMax: (centreY + (pastArcLengths)) + (arcLength/2),
         dots: allDotsNew,
+        finalArcLength:arcLength,
+        nextArcLength:pastArcLengths
     }
 
     return (dots_); //returns the dots
@@ -187,29 +203,21 @@ function createCells(coordinates,polygons){
 // create all cells -----------------------------
 
 module.exports = function (options){
+
     var maxRadius = options.maxRadius; //pulls variables from options
     var latitude = options.centre.lat;
     var longitude = options.centre.long;
-    var arcLength = options.arcLength;
-
-    if(arcLength === "auto"){
-        arcLength = Math.round((12.9642*maxRadius) + 9.7619)
-        if(arcLength < 300){
-            arcLength = 300
-        }
-    }
 
     // create array of points -------------------
 
     var points = dots({
-        maxRadius: (maxRadius*1000) + arcLength, //adder to sort out voronoi problem
-        arcLength: arcLength,
+        maxRadius: (maxRadius*1000),
         centreX: 0,
         centreY: 0,
         centre: true,
     });
 
-    var numberInOuter = generateCoordinates(0,0,(maxRadius*1000) + arcLength,arcLength).length;
+    var numberInOuter = generateCoordinates(0,0,(points.nextArcLength),points.finalArcLength).length;
 
     // Create coordinates for the map -----------
     
@@ -221,8 +229,11 @@ module.exports = function (options){
 
     // Combine polygons and points --------------
 
-    coordinates = coordinates.slice(0,-1*(numberInOuter));
-    polygons = polygons.slice(0,-1*(numberInOuter));
+    coordinates.length = coordinates.length - numberInOuter;
+    polygons.length = polygons.length - numberInOuter;
+
+    // coordinates = coordinates.slice(0,-1*(numberInOuter));
+    // polygons = polygons.slice(0,-1*(numberInOuter));
 
     var cells = createCells(coordinates,polygons);
     
@@ -238,4 +249,13 @@ module.exports = function (options){
 
 // console.log(arcLength)
 
+// const maxRadius = 75
 
+// var points = dots({
+//     maxRadius: (maxRadius*1000),
+//     centreX: 0,
+//     centreY: 0,
+//     centre: true,
+// });
+
+// console.log(points.finalArcLength)
