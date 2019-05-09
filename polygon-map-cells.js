@@ -228,3 +228,14 @@ module.exports = function (options){
     
     return cells;
 }
+
+// const maxRadius = 30
+
+// arcLength = Math.round((12.9642*maxRadius) + 9.7619)
+// if(arcLength < 250){
+//     arcLength = 250
+// }
+
+// console.log(arcLength)
+
+
