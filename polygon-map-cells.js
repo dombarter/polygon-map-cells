@@ -1,7 +1,7 @@
 // Dots.js
 
-const minimumRadius = 350 //was 300
-const radiusIncrementer = 22.5 //was 15
+const minimumRadius = 360 //was 300
+const radiusIncrementer = 22 //was 15
 
 // Used to create an array of x, y coordinates from a set of options
 
@@ -242,14 +242,28 @@ module.exports = function (options){
 
 // Test script
 
-const maxRadius = 75
+// const maxRadius = 75
 
-var points = dots({
-    maxRadius: (maxRadius*1000),
-    centreX: 0,
-    centreY: 0,
-    centre: true,
-});
+// var points = dots({
+//     maxRadius: (maxRadius*1000),
+//     centreX: 0,
+//     centreY: 0,
+//     centre: true,
+// });
 
-console.log(points.finalArcLength, points.finalArcLength / 2)
-console.log(points.number)
+// console.log(points.finalArcLength, points.finalArcLength / 2)
+// console.log(points.number)
+
+// Heatmaps number calculation
+
+// let number = 5
+// while(number <= 75){
+//     var points = dots({
+//         maxRadius: (number*1000),
+//         centreX: 0,
+//         centreY: 0,
+//         centre: true,
+//     });
+//     console.log(`${number} km radius: ${points.number} points & ${Math.floor(40000/points.number)} heatmaps & ${points.finalArcLength} m F.A.L & ${points.finalArcLength / 2} m F.A.L accuracy`)
+//     number = number + 5
+// }
