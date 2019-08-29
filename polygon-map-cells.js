@@ -267,3 +267,18 @@ module.exports = function (options){
 //     console.log(`${number} km radius: ${points.number} points & ${Math.floor(40000/points.number)} heatmaps & ${points.finalArcLength} m F.A.L & ${points.finalArcLength / 2} m F.A.L accuracy`)
 //     number = number + 5
 // }
+
+
+
+let number = 5
+while(number <= 75){
+    const points = module.exports({
+        maxRadius: number,
+        centre: {
+            lat: 53.396870,
+            long: -1.426108,
+        }
+    })
+    console.log(`${number} km radius: ${points.length} cells & ${Math.floor(39500/points.length)} heatmaps`)
+    number += 5
+}
