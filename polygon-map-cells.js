@@ -1,7 +1,7 @@
 // Dots.js
 
-const minimumRadius = 300
-const radiusIncrementer = 15
+const minimumRadius = 350 //was 300
+const radiusIncrementer = 22.5 //was 15
 
 // Used to create an array of x, y coordinates from a set of options
 
@@ -240,22 +240,16 @@ module.exports = function (options){
     return cells;
 }
 
-// const maxRadius = 30
+// Test script
 
-// arcLength = Math.round((12.9642*maxRadius) + 9.7619)
-// if(arcLength < 250){
-//     arcLength = 250
-// }
+const maxRadius = 75
 
-// console.log(arcLength)
+var points = dots({
+    maxRadius: (maxRadius*1000),
+    centreX: 0,
+    centreY: 0,
+    centre: true,
+});
 
-// const maxRadius = 75
-
-// var points = dots({
-//     maxRadius: (maxRadius*1000),
-//     centreX: 0,
-//     centreY: 0,
-//     centre: true,
-// });
-
-// console.log(points.finalArcLength)
+console.log(points.finalArcLength, points.finalArcLength / 2)
+console.log(points.number)
