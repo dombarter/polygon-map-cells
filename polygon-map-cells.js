@@ -1,7 +1,7 @@
 // Dots.js
 
-const minimumRadius = 360 //was 300
-const radiusIncrementer = 22 //was 15
+const minimumRadius = 265 //was 300
+const radiusIncrementer = 14 //was 15
 
 // Used to create an array of x, y coordinates from a set of options
 
@@ -240,45 +240,35 @@ module.exports = function (options){
     return cells;
 }
 
-// Test script
+// test script ----------------------------------
 
-// const maxRadius = 75
+module.exports.report = () => {
+    
+    console.log("polygon-map-cells report\n\n")
 
-// var points = dots({
-//     maxRadius: (maxRadius*1000),
-//     centreX: 0,
-//     centreY: 0,
-//     centre: true,
-// });
+    let number = 5
+    while(number <= 75){
+        const points = module.exports({
+            maxRadius: number,
+            centre: {
+                lat: 53.396870,
+                long: -1.426108,
+            }
+        })
+        const dots_ = dots({
+            maxRadius: number * 1000,
+            centreX: 0,
+            centreY: 0,
+            centre: true
+        })
+        console.log(`${number} km radius: 
+                    ${points.length} cells
+                    ${Math.floor(39500/points.length)} heatmaps
+                    ${dots_.finalArcLength} m F.A.L
+                    ${dots_.finalArcLength / 2} m F.A.L accuracy
+                    `)
+        number += 5
+    }
 
-// console.log(points.finalArcLength, points.finalArcLength / 2)
-// console.log(points.number)
-
-// Heatmaps number calculation
-
-// let number = 5
-// while(number <= 75){
-//     var points = dots({
-//         maxRadius: (number*1000),
-//         centreX: 0,
-//         centreY: 0,
-//         centre: true,
-//     });
-//     console.log(`${number} km radius: ${points.number} points & ${Math.floor(40000/points.number)} heatmaps & ${points.finalArcLength} m F.A.L & ${points.finalArcLength / 2} m F.A.L accuracy`)
-//     number = number + 5
-// }
-
-
-
-let number = 5
-while(number <= 75){
-    const points = module.exports({
-        maxRadius: number,
-        centre: {
-            lat: 53.396870,
-            long: -1.426108,
-        }
-    })
-    console.log(`${number} km radius: ${points.length} cells & ${Math.floor(39500/points.length)} heatmaps`)
-    number += 5
 }
+
